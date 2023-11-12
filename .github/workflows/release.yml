@@ -32,26 +32,12 @@ jobs:
           override: true
           target: ${{ matrix.target }}
 
-      - name: Build release binary
-        run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable
-
-      - name: Upload API
-        uses: actions/upload-artifact@v3
-        with:
-            name: build-linux
-            path: ./target/${{ matrix.target }}/release
-            retention-days: 1
-
       - name: Tar release 0
         id: make-artifact-0
-        working-directory: ./target/${{ matrix.target }}/release
-        run: |
-          pwd
-          ls -la
-
-      - name: Tar release 1
-        id: make-artifact-1
         working-directory: /
         run: |
           pwd
+          echo --------------------
           ls -la
+          echo ------------------------------
+          ls -la ./bin
