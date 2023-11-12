@@ -37,9 +37,10 @@ jobs:
         working-directory: /
         run: |
           sudo mkdir me
+          chown -R $(whoami):$(whoami) /me/
 
       - name: Build release binary
-        run: sudo cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
+        run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
 
       - name: Upload API
         uses: actions/upload-artifact@v3
@@ -62,4 +63,3 @@ jobs:
           ls -la /me/target/debug/
           ls -la /me/target/release/
           ls -la /me/target/build/
-
