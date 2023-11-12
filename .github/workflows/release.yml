@@ -32,12 +32,34 @@ jobs:
           override: true
           target: ${{ matrix.target }}
 
-      - name: Tar release 0
-        id: make-artifact-0
+      - name: Find cargo
+        id: find
         working-directory: /
         run: |
-          whoami
-          echo -------------------- 44444444444
-          ls -l /home/
-          echo -------------------- 5555
-          ls -l /home/.cargo/
+          find -name cargo
+          find -name rustup
+
+      - name: Build release binary
+        run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
+
+      - name: Upload API
+        uses: actions/upload-artifact@v3
+        with:
+            name: build-linux
+            path: /me/
+            retention-days: 1
+
+      - name: Tar release 0
+        id: make-artifact-0
+        working-directory: /me/
+        run: |
+          pwd
+          ls -l
+
+      - name: Tar release 1
+        id: make-artifact-1
+        working-directory: /me/
+        run: |
+          ls -la /me/target/debug/
+          ls -la /me/target/release/
+          ls -la /me/target/build/
