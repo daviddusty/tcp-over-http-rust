@@ -32,13 +32,6 @@ jobs:
           override: true
           target: ${{ matrix.target }}
 
-      - name: Find cargo
-        id: find
-        working-directory: /
-        run: |
-          find -name cargo
-          find -name rustup
-
       - name: Build release binary
         run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
 
