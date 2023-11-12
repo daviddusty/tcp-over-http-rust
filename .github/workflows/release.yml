@@ -7,7 +7,6 @@ on:
 
 jobs:
   build-release:
-    needs: create-release
     name: build-release
     runs-on: ubuntu-latest
     env:
