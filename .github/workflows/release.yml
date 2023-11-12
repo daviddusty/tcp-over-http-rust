@@ -2,7 +2,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -31,53 +31,27 @@ jobs:
           profile: minimal
           override: true
           target: ${{ matrix.target }}
-        
-      # Workaround for <https://github.com/actions/virtual-environments/issues/2557>
-      - name: Switch Xcode SDK
-        if: runner.os == 'macos'
-        run: |
-          cat <<EOF >> "$GITHUB_ENV"
-          SDKROOT=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
-          EOF
 
       - name: Build release binary
         run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable
 
-      # this breaks on aarch64 and this if conditional isn't working for some reason: TODO: investigate
-      #- name: Strip release binary
-      #  if: runner.target != 'aarch64-unknown-linux-musl' && runner.target != 'aarch64-apple-darwin'
-      #  run: strip "target/${{ matrix.target }}/release/zellij"
+      - name: Upload API
+        uses: actions/upload-artifact@v3
+        with:
+            name: build-linux
+            path: ./target/${{ matrix.target }}/release
+            retention-days: 1
 
-      - name: Tar release
-        id: make-artifact
+      - name: Tar release 0
+        id: make-artifact-0
         working-directory: ./target/${{ matrix.target }}/release
         run: |
-          name="zellij-${{ matrix.target }}.tar.gz"
-          tar cvzf "${name}" "zellij"
-          echo "::set-output name=name::${name}"
+          pwd
+          ls -la
 
-      - name: Upload release archive
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }} 
-          asset_path: ./target/${{ matrix.target }}/release/${{ steps.make-artifact.outputs.name }}
-          asset_name: zellij-${{matrix.target}}.tar.gz
-          asset_content_type: application/octet-stream
-
-  create-release:
-    runs-on: ubuntu-latest
-    outputs: 
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-      - name: create_release 
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.event_name == 'workflow_dispatch' && '' || github.ref }}
-          release_name: Release ${{ github.event_name == 'workflow_dispatch' && 'main' || github.ref }}
-          draft: ${{ github.event_name == 'workflow_dispatch' }}
-          prerelease: false  
+      - name: Tar release 1
+        id: make-artifact-1
+        working-directory: /
+        run: |
+          pwd
+          ls -la
