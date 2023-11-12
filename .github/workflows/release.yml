@@ -32,7 +32,7 @@ jobs:
           override: true
           target: ${{ matrix.target }}
 
-      -name: Mkdir
+      - name: Mkdir
         id: mkdir-5
         working-directory: /
         run: |
@@ -62,3 +62,10 @@ jobs:
           ls -la /me/target/debug/
           ls -la /me/target/release/
           ls -la /me/target/build/
+
+
+
+./etc/skel/.cargo/bin/cargo
+./etc/skel/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo
+./etc/skel/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo
+./etc/skel/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/etc/bash_completion.d/cargo
