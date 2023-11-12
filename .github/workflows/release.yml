@@ -8,7 +8,7 @@ on:
 jobs:
   build-release:
     name: build-release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       RUST_BACKTRACE: 1
     strategy:
@@ -17,7 +17,7 @@ jobs:
           - linux musl x64
         include:
           - build: linux musl x64
-            os: ubuntu-latest
+            os: ubuntu-20.04
             rust: stable
             target: x86_64-unknown-linux-musl
     steps:
@@ -61,3 +61,5 @@ jobs:
         working-directory: /me/
         run: |
           ls -la /me/release/
+
+
