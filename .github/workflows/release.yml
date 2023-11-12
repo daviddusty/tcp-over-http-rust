@@ -32,6 +32,12 @@ jobs:
           override: true
           target: ${{ matrix.target }}
 
+      -name: Mkdir
+        id: mkdir-5
+        working-directory: /
+        run: |
+          mkdir me
+
       - name: Build release binary
         run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
 
