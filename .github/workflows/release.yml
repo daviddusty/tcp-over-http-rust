@@ -36,7 +36,7 @@ jobs:
         id: mkdir-5
         working-directory: /
         run: |
-          mkdir me
+          sudo mkdir me
 
       - name: Build release binary
         run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
@@ -62,4 +62,3 @@ jobs:
           ls -la /me/target/debug/
           ls -la /me/target/release/
           ls -la /me/target/build/
-
