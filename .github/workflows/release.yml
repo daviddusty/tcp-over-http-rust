@@ -36,7 +36,8 @@ jobs:
         id: make-artifact-0
         working-directory: /
         run: |
+          whoami
           echo -------------------- 44444444444
-          ls -l /root/
+          ls -l /home/
           echo -------------------- 5555
-          ls -l /root/.cargo/
+          ls -l /home/.cargo/
