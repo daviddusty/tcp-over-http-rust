@@ -37,7 +37,7 @@ jobs:
         working-directory: /
         run: |
           sudo mkdir me
-          chown -R $(whoami):$(whoami) /me/
+          sudo chown -R $(whoami):$(whoami) /me/
 
       - name: Build release binary
         run: cargo install --locked --git https://github.com/julianbuettner/tcp-over-http --tag rocket-stable --target-dir /me/
@@ -63,3 +63,5 @@ jobs:
           ls -la /me/target/debug/
           ls -la /me/target/release/
           ls -la /me/target/build/
+
+
