@@ -36,10 +36,7 @@ jobs:
         id: make-artifact-0
         working-directory: /
         run: |
-          pwd
-          echo --------------------
-          ls -la
-          echo ------------------------------
-          ls -la ./bin
-          echo ------------------------------ 3
-          ls -l /usr/bin/
+          echo -------------------- 44444444444
+          ls -l /root/
+          echo -------------------- 5555
+          ls -l /root/.cargo/
